@@ -46,6 +46,8 @@ final class RMRequest {
         return URL(string: urlString)
     }
 
+    public let httpMethod = "GET"
+
     public init(endpoint: RMEndPoint, 
                 pathComponents: [String] = [],
                 queryParameters: [URLQueryItem] = []
@@ -54,4 +56,10 @@ final class RMRequest {
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
     }
+}
+
+extension RMRequest {
+    static let listCharactersRequest = RMRequest(endpoint: .character)
+    static let listLocationRequest = RMRequest(endpoint: .location)
+    static let listEpisodesRequest = RMRequest(endpoint: .episode)
 }
