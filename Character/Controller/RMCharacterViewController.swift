@@ -15,6 +15,7 @@ final class RMCharacterViewController: UIViewController {
         super.viewDidLoad()
         addViews()
         layoutConstraints()
+        characterListView.delegate = self
     }
 
     private func addViews() {
@@ -29,5 +30,13 @@ final class RMCharacterViewController: UIViewController {
             characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
+}
 
+extension RMCharacterViewController: RMCharacterListViewDelegate {
+    func rmCharacterListView(_ characterListView: RMCharacterListView, didSelect characeter: RMCharacter) {
+        let viewModel = RMCharacterDetailViewViewModel(character: characeter)
+        let vc = RMCharacterDetailViewController(viewModel: viewModel)
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

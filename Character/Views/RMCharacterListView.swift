@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol RMCharacterListViewDelegate: AnyObject {
+    func rmCharacterListView(_ characterListView: RMCharacterListView, didSelect characeter: RMCharacter)
+}
+
 final class RMCharacterListView: UIView {
 
     private var viewModel: RMCharacterListViewViewModal?
+    weak var delegate: RMCharacterListViewDelegate?
 
     private lazy var spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -21,7 +26,7 @@ final class RMCharacterListView: UIView {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +43,7 @@ final class RMCharacterListView: UIView {
         addViews()
         layoutConstraints()
         spinner.startAnimating()
+        viewModel?.delegate = self
         viewModel?.fetchCharacters()
     }
     
@@ -71,13 +77,20 @@ final class RMCharacterListView: UIView {
     private func setupCollectionView() {
         collectionView.dataSource = viewModel
         collectionView.delegate = viewModel
+    }
+}
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.spinner.stopAnimating()
-            self.collectionView.isHidden = false
-            UIView.animate(withDuration: 1) {
-                self.collectionView.alpha = 1
-            }
+extension RMCharacterListView: RMCharacterListViewViewModalProtocol {
+    func didLoadInitialCharacters() {
+        spinner.stopAnimating()
+        collectionView.isHidden = false
+        collectionView.reloadData() // Load only for the first initial fetch
+        UIView.animate(withDuration: 1) {
+            self.collectionView.alpha = 1
         }
+    }
+
+    func didSelectCharacter(_ character: RMCharacter) {
+        delegate?.rmCharacterListView(self, didSelect: character)
     }
 }
