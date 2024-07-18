@@ -21,7 +21,6 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
         super.init(frame: frame)
         addViews()
         layoutConstraints()
-        startAnimating()
     }
     
     required init?(coder: NSCoder) {
@@ -42,7 +41,7 @@ final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
         ])
     }
 
-    private func startAnimating() {
+    func startAnimating() {
         spinner.startAnimating()
     }
 

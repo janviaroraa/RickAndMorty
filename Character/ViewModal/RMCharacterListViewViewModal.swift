@@ -31,6 +31,7 @@ final class RMCharacterListViewViewModal: NSObject {
 
     private var cellViewModel = [RMCharacterCollectionViewCellViewModel]()
     private var apiInfo: RMGetAllCharactersResponseModal.Info? = nil
+    private var shouldLoadMoreCharacters = false
 
     var shouldShowLoadMoreIndicator: Bool {
         return apiInfo?.next != nil
@@ -55,7 +56,7 @@ final class RMCharacterListViewViewModal: NSObject {
 
     /// Fetches next 20 characters in line
     func fetchAdditionalCharacters() {
-        
+        shouldLoadMoreCharacters = true
     }
 }
 
@@ -77,10 +78,15 @@ extension RMCharacterListViewViewModal: UICollectionViewDataSource {
             fatalError("Unsupported")
         }
 
-        guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier, for: indexPath) as? RMFooterLoadingCollectionReusableView else {
-            return UICollectionReusableView()
+        guard let footer = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier,
+            for: indexPath
+        ) as? RMFooterLoadingCollectionReusableView else {
+            fatalError("Unsupported")
         }
 
+        footer.startAnimating()
         return footer
     }
 }
@@ -105,13 +111,27 @@ extension RMCharacterListViewViewModal: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard shouldShowLoadMoreIndicator else { return .zero }
-        return CGSize(width: collectionView.frame.width, height: 40)
+        return CGSize(width: collectionView.frame.width, height: 50)
     }
 }
 
 extension RMCharacterListViewViewModal: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard shouldShowLoadMoreIndicator else { return }
+        guard shouldShowLoadMoreIndicator, !shouldLoadMoreCharacters else { return }
 
+        let offset = scrollView.contentOffset.y
+        let totalContentHeight = scrollView.contentSize.height // Greater
+
+        // Smaller - iPhone's frame
+        // Gonna be fixed always
+        // Will only gets changed if navigation item shrinks
+        let totalFrameHeight = scrollView.frame.size.height
+
+        // checking if we have reached at the end of scroll view
+        // subracting 50 because of footer's height
+        // subracting 20 as a buffer
+        if offset >= (totalContentHeight - totalFrameHeight - 50 - 20) {
+            fetchAdditionalCharacters()
+        }
     }
 }
