@@ -33,6 +33,7 @@ final class RMCharacterListView: UIView {
         cv.isHidden = true
         cv.alpha = 0
         cv.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.identifier)
+        cv.register(RMFooterLoadingCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier)
         return cv
     }()
 

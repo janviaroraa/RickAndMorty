@@ -33,7 +33,7 @@ final class RMCharacterListViewViewModal: NSObject {
     private var apiInfo: RMGetAllCharactersResponseModal.Info? = nil
 
     var shouldShowLoadMoreIndicator: Bool {
-        return false
+        return apiInfo?.next != nil
     }
 
     /// Fetches initial 20 characters
@@ -71,6 +71,18 @@ extension RMCharacterListViewViewModal: UICollectionViewDataSource {
         cell.configure(with: cellViewModel[indexPath.row])
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter else {
+            fatalError("Unsupported")
+        }
+
+        guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier, for: indexPath) as? RMFooterLoadingCollectionReusableView else {
+            return UICollectionReusableView()
+        }
+
+        return footer
+    }
 }
 
 extension RMCharacterListViewViewModal: UICollectionViewDelegate {
@@ -89,6 +101,11 @@ extension RMCharacterListViewViewModal: UICollectionViewDelegateFlowLayout {
             width: width,
             height: width * 1.5
         )
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard shouldShowLoadMoreIndicator else { return .zero }
+        return CGSize(width: collectionView.frame.width, height: 40)
     }
 }
 

@@ -53,6 +53,7 @@ class RMCharacterCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.layer.masksToBounds = false
         setupShadow()
         addViews()
         layoutConstraints()
@@ -76,6 +77,9 @@ class RMCharacterCollectionViewCell: UICollectionViewCell {
     private func setupShadow() {
         contentView.layer.shadowColor = UIColor.label.cgColor
         contentView.layer.shadowOpacity = 0.3
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        contentView.layer.shadowRadius = 4
+        contentView.layer.masksToBounds = false
     }
 
     private func addViews() {
