@@ -9,6 +9,7 @@ import UIKit
 
 protocol RMCharacterListViewViewModalProtocol: AnyObject {
     func didLoadInitialCharacters()
+    func didLoadMoreCharacters(newResults: [RMCharacter])
     func didSelectCharacter(_ character: RMCharacter)
 }
 
@@ -16,8 +17,9 @@ final class RMCharacterListViewViewModal: NSObject {
 
     weak var delegate: RMCharacterListViewViewModalProtocol?
 
-    private var characters = [RMCharacter]() {
+    private(set) var characters = [RMCharacter]() {
         didSet {
+            cellViewModel = []
             for character in characters {
                 let viewModel = RMCharacterCollectionViewCellViewModel(
                     characterName: character.name ?? "Dedault name",
@@ -42,7 +44,8 @@ final class RMCharacterListViewViewModal: NSObject {
         RMService.shared.execute(.listCharactersRequest, expecting: RMGetAllCharactersResponseModal.self) { [weak self] result in
             switch result {
             case .success(let model):
-                guard let results = model.results, let info = model.info else { return }
+                guard let results = model.results,
+                      let info = model.info else { return }
                 self?.characters = results
                 self?.apiInfo = info
                 DispatchQueue.main.async {
@@ -55,8 +58,38 @@ final class RMCharacterListViewViewModal: NSObject {
     }
 
     /// Fetches next 20 characters in line
-    func fetchAdditionalCharacters() {
+    func fetchAdditionalCharacters(url: URL) {
+        guard !shouldLoadMoreCharacters else { return }
         shouldLoadMoreCharacters = true
+
+        guard let request = RMRequest(url: url) else {
+            shouldLoadMoreCharacters = false
+            print("Failed to create request")
+            return
+        }
+
+        RMService.shared.execute(request, expecting: RMGetAllCharactersResponseModal.self) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let model):
+                guard let moreResults = model.results,
+                      let info = model.info else { return }
+                self.apiInfo = info
+
+
+//                self.characters.append(contentsOf: moreResults)
+                self.delegate?.didLoadMoreCharacters(newResults: moreResults)
+                self.shouldLoadMoreCharacters = false
+
+            case .failure(let error):
+                self.shouldLoadMoreCharacters = false
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    func appendCharacters(newResults: [RMCharacter]) {
+        characters.append(contentsOf: newResults)
     }
 }
 
@@ -64,7 +97,7 @@ extension RMCharacterListViewViewModal: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         cellViewModel.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterCollectionViewCell.identifier, for: indexPath) as? RMCharacterCollectionViewCell else {
             fatalError("Unsupported cell!")
@@ -117,21 +150,29 @@ extension RMCharacterListViewViewModal: UICollectionViewDelegateFlowLayout {
 
 extension RMCharacterListViewViewModal: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard shouldShowLoadMoreIndicator, !shouldLoadMoreCharacters else { return }
+        guard shouldShowLoadMoreIndicator,
+              !shouldLoadMoreCharacters,
+              !cellViewModel.isEmpty,
+              let urlString = apiInfo?.next,
+              let url = URL(string: urlString) else { return }
 
-        let offset = scrollView.contentOffset.y
-        let totalContentHeight = scrollView.contentSize.height // Greater
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] timer in
+            let offset = scrollView.contentOffset.y
+            let totalContentHeight = scrollView.contentSize.height // Greater
 
-        // Smaller - iPhone's frame
-        // Gonna be fixed always
-        // Will only gets changed if navigation item shrinks
-        let totalFrameHeight = scrollView.frame.size.height
+            // Smaller - iPhone's frame
+            // Gonna be fixed always
+            // Will only gets changed if navigation item shrinks
+            let totalFrameHeight = scrollView.frame.size.height
 
-        // checking if we have reached at the end of scroll view
-        // subracting 50 because of footer's height
-        // subracting 20 as a buffer
-        if offset >= (totalContentHeight - totalFrameHeight - 50 - 20) {
-            fetchAdditionalCharacters()
+            // checking if we have reached at the end of scroll view
+            // subracting 50 because of footer's height
+            // subracting 20 as a buffer
+            if offset >= (totalContentHeight - totalFrameHeight - 50 - 20) {
+                self?.fetchAdditionalCharacters(url: url)
+            }
+
+            timer.invalidate()
         }
     }
 }

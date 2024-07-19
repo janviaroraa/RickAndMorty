@@ -8,7 +8,7 @@
 import Foundation
 
 final class RMRequest {
-    
+
     private struct Constants {
         static let baseURL = "https://rickandmortyapi.com/api"
     }
@@ -48,13 +48,59 @@ final class RMRequest {
 
     public let httpMethod = "GET"
 
-    public init(endpoint: RMEndPoint, 
+    public init(endpoint: RMEndPoint,
                 pathComponents: [String] = [],
                 queryParameters: [URLQueryItem] = []
     ) {
         self.endpoint = endpoint
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
+    }
+
+    convenience init?(url: URL) {
+        let urlString = url.absoluteString
+        if !urlString.contains(Constants.baseURL) {
+            return nil
+        }
+
+        let trimmed = urlString.replacingOccurrences(of: Constants.baseURL+"/", with: "")
+
+        // Example: BaseURL/character/
+        // Example: BaseURL/character/
+        if trimmed.contains("/") {
+            let components = trimmed.components(separatedBy: "/")
+            if !components.isEmpty {
+                let endpointString = components[0]
+                if let rmEndpoint = RMEndPoint(rawValue: endpointString) {
+                    self.init(endpoint: rmEndpoint)
+                    return
+                }
+            }
+        } else if trimmed.contains("?") {
+            let components = trimmed.components(separatedBy: "?")
+            if !components.isEmpty, components.count >= 2 {
+                let endpointString = components[0]
+                let queryItemsString = components[1]
+                // value=name&value=name
+                let queryItems: [URLQueryItem] = queryItemsString.components(separatedBy: "&").compactMap({
+                    guard $0.contains("=") else {
+                        return nil
+                    }
+                    let parts = $0.components(separatedBy: "=")
+
+                    return URLQueryItem(
+                        name: parts[0],
+                        value: parts[1]
+                    )
+                })
+
+                if let rmEndpoint = RMEndPoint(rawValue: endpointString) {
+                    self.init(endpoint: rmEndpoint, queryParameters: queryItems)
+                    return
+                }
+            }
+        }
+        return nil
     }
 }
 

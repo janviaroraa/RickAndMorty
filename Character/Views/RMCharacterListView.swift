@@ -91,6 +91,22 @@ extension RMCharacterListView: RMCharacterListViewViewModalProtocol {
         }
     }
 
+    func didLoadMoreCharacters(newResults: [RMCharacter]) {
+        DispatchQueue.main.async {
+            self.collectionView.performBatchUpdates {
+                let originalCount = self.viewModel?.characters.count ?? 0
+                self.viewModel?.appendCharacters(newResults: newResults)
+
+                let total = originalCount + newResults.count
+
+                let indexPathsToAdd: [IndexPath] = Array(originalCount..<(total)).compactMap ({
+                    return IndexPath(row: $0, section: 0)
+                })
+                self.collectionView.insertItems(at: indexPathsToAdd)
+            }
+        }
+    }
+
     func didSelectCharacter(_ character: RMCharacter) {
         delegate?.rmCharacterListView(self, didSelect: character)
     }
