@@ -28,16 +28,6 @@ final class RMCharacterCollectionViewCellViewModel {
             completion(.failure(URLError(.badURL)))
             return
         }
-
-        let urlRequest = URLRequest(url: characterImageURL)
-
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard let data, error == nil else {
-                completion(.failure(URLError(.badServerResponse)))
-                return
-            }
-
-            completion(.success(data))
-        }.resume()
+        RMImageManager.shared.downloadImage(characterImageURL, completion: completion)
     }
 }

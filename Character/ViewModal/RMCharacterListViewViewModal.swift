@@ -75,12 +75,8 @@ final class RMCharacterListViewViewModal: NSObject {
                 guard let moreResults = model.results,
                       let info = model.info else { return }
                 self.apiInfo = info
-
-
-//                self.characters.append(contentsOf: moreResults)
                 self.delegate?.didLoadMoreCharacters(newResults: moreResults)
                 self.shouldLoadMoreCharacters = false
-
             case .failure(let error):
                 self.shouldLoadMoreCharacters = false
                 print(error.localizedDescription)

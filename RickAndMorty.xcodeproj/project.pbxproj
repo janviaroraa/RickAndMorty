@@ -40,6 +40,11 @@
 		126065112C45196E004E2B26 /* RMCharacterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126065102C45196E004E2B26 /* RMCharacterDetailView.swift */; };
 		126065152C451A33004E2B26 /* RMCharacterDetailViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126065142C451A33004E2B26 /* RMCharacterDetailViewViewModel.swift */; };
 		12A09DAA2C48DFA7002E3BCF /* RMFooterLoadingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DA92C48DFA7002E3BCF /* RMFooterLoadingCollectionReusableView.swift */; };
+		12A09DAC2C4A8C5C002E3BCF /* RMImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DAB2C4A8C5C002E3BCF /* RMImageManager.swift */; };
+		12A09DAF2C4A8D83002E3BCF /* RMToastAdaptable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DAE2C4A8D83002E3BCF /* RMToastAdaptable.swift */; };
+		12A09DB12C4A9376002E3BCF /* RMSuccessToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DB02C4A9376002E3BCF /* RMSuccessToast.swift */; };
+		12A09DB32C4A938C002E3BCF /* RMErrorToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DB22C4A938C002E3BCF /* RMErrorToast.swift */; };
+		12A09DB52C4A93D3002E3BCF /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DB42C4A93D3002E3BCF /* UIColor+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +102,11 @@
 		126065102C45196E004E2B26 /* RMCharacterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterDetailView.swift; sourceTree = "<group>"; };
 		126065142C451A33004E2B26 /* RMCharacterDetailViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterDetailViewViewModel.swift; sourceTree = "<group>"; };
 		12A09DA92C48DFA7002E3BCF /* RMFooterLoadingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMFooterLoadingCollectionReusableView.swift; sourceTree = "<group>"; };
+		12A09DAB2C4A8C5C002E3BCF /* RMImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMImageManager.swift; sourceTree = "<group>"; };
+		12A09DAE2C4A8D83002E3BCF /* RMToastAdaptable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMToastAdaptable.swift; sourceTree = "<group>"; };
+		12A09DB02C4A9376002E3BCF /* RMSuccessToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSuccessToast.swift; sourceTree = "<group>"; };
+		12A09DB22C4A938C002E3BCF /* RMErrorToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMErrorToast.swift; sourceTree = "<group>"; };
+		12A09DB42C4A93D3002E3BCF /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +143,7 @@
 				126064FB2C43E98C004E2B26 /* APIResponseTypes */,
 				126064D12C425B01004E2B26 /* Managers */,
 				126064D52C425B5A004E2B26 /* Extensions */,
+				12A09DAD2C4A8D6F002E3BCF /* Toast */,
 				126064DF2C425C0A004E2B26 /* TabBar */,
 				126064D72C425BBE004E2B26 /* Character */,
 				1260650C2C4518B5004E2B26 /* CharacterDetail */,
@@ -184,6 +195,7 @@
 		126064D12C425B01004E2B26 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				12A09DAB2C4A8C5C002E3BCF /* RMImageManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -214,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				126065042C4421EE004E2B26 /* UIView+Ext.swift */,
+				12A09DB42C4A93D3002E3BCF /* UIColor+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -351,6 +364,16 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		12A09DAD2C4A8D6F002E3BCF /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				12A09DAE2C4A8D83002E3BCF /* RMToastAdaptable.swift */,
+				12A09DB02C4A9376002E3BCF /* RMSuccessToast.swift */,
+				12A09DB22C4A938C002E3BCF /* RMErrorToast.swift */,
+			);
+			path = Toast;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -482,19 +505,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				126065002C44195F004E2B26 /* RMCharacterListViewViewModal.swift in Sources */,
+				12A09DB32C4A938C002E3BCF /* RMErrorToast.swift in Sources */,
 				126064F02C42B718004E2B26 /* RMOrigin.swift in Sources */,
 				126064F22C42B763004E2B26 /* RMSingleLocation.swift in Sources */,
 				126064FD2C43E9C8004E2B26 /* RMGetAllCharactersResponseModal.swift in Sources */,
 				126064F42C42B7BC004E2B26 /* RMCharacterStatus.swift in Sources */,
 				126064F62C42B868004E2B26 /* RMCharacterGender.swift in Sources */,
 				126064E62C425CDD004E2B26 /* RMLocationViewController.swift in Sources */,
+				12A09DAC2C4A8C5C002E3BCF /* RMImageManager.swift in Sources */,
 				126064A62C42585A004E2B26 /* RMTabViewController.swift in Sources */,
 				126064DE2C425BDE004E2B26 /* RMLocation.swift in Sources */,
 				126064A22C42585A004E2B26 /* AppDelegate.swift in Sources */,
 				126064DA2C425BCE004E2B26 /* RMEpisode.swift in Sources */,
 				1260650E2C4518D7004E2B26 /* RMCharacterDetailViewController.swift in Sources */,
 				126064A42C42585A004E2B26 /* SceneDelegate.swift in Sources */,
+				12A09DB52C4A93D3002E3BCF /* UIColor+Ext.swift in Sources */,
+				12A09DB12C4A9376002E3BCF /* RMSuccessToast.swift in Sources */,
 				126065052C4421EE004E2B26 /* UIView+Ext.swift in Sources */,
+				12A09DAF2C4A8D83002E3BCF /* RMToastAdaptable.swift in Sources */,
 				126065032C4419CA004E2B26 /* RMCharacterListView.swift in Sources */,
 				126064E82C425CE8004E2B26 /* RMSettingsViewController.swift in Sources */,
 				126065152C451A33004E2B26 /* RMCharacterDetailViewViewModel.swift in Sources */,
