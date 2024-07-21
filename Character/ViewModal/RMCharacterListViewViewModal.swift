@@ -51,8 +51,10 @@ final class RMCharacterListViewViewModal: NSObject {
                 DispatchQueue.main.async {
                     self?.delegate?.didLoadInitialCharacters()
                 }
-            case .failure(let err):
-                print(err.localizedDescription)
+            case .failure(let error):
+                DispatchQueue.main.sync {
+                    RMErrorToast(withText: error.localizedDescription).show()
+                }
             }
         }
     }
@@ -79,7 +81,9 @@ final class RMCharacterListViewViewModal: NSObject {
                 self.shouldLoadMoreCharacters = false
             case .failure(let error):
                 self.shouldLoadMoreCharacters = false
-                print(error.localizedDescription)
+                DispatchQueue.main.sync {
+                    RMErrorToast(withText: error.localizedDescription).show()
+                }
             }
         }
     }

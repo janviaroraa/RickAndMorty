@@ -13,7 +13,7 @@ class RMErrorToast: PPToastAdaptable {
     }
 
     override func getBackgroundColor() -> UIColor {
-        .red
+        .systemRed
     }
 }
 
