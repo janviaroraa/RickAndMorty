@@ -35,21 +35,20 @@ final class RMCharacterDetailViewViewModel {
 
     private func setupSections() {
         sections = [
-            .photo(viewModel: .init()),
+            .photo(viewModel: .init(imageURL: URL(string: character.image ?? ""))),
             .information(viewModels: [
-                .init(),
-                .init(),
-                .init(),
-                .init()
+                .init(type: .status, value: character.status?.text),
+                .init(type: .species, value: character.species),
+                .init(type: .type, value: character.type),
+                .init(type: .gender, value: character.gender?.rawValue),
+                .init(type: .origin, value: character.origin?.name),
+                .init(type: .location, value: character.location?.name),
+                .init(type: .episodeCount, value: String(character.episode?.count ?? 0)),
+                .init(type: .created, value: character.created)
             ]),
-            .episodes(viewModels: [
-                .init(),
-                .init(),
-                .init(),
-                .init(),
-                .init(),
-                .init()
-            ])
+            .episodes(viewModels: character.episode?.compactMap({
+                return RMCharacterEpisodesCollectionViewCellViewModel(episodeDataURL: URL(string: $0))
+            }) ?? [])
         ]
     }
 
@@ -101,11 +100,11 @@ extension RMCharacterDetailViewViewModel {
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: layoutSizeForItem)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 2, bottom: 2, trailing: 2)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
 
         let layoutSizeForGroup = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(120)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: layoutSizeForGroup,
@@ -125,7 +124,7 @@ extension RMCharacterDetailViewViewModel {
 
         let layoutSizeForGroup = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.8),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(120)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: layoutSizeForGroup,

@@ -71,7 +71,7 @@ class RMCharacterCollectionViewCell: UICollectionViewCell {
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+        setupShadow()
     }
 
     private func setupShadow() {

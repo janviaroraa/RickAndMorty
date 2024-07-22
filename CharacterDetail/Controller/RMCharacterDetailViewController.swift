@@ -78,17 +78,14 @@ extension RMCharacterDetailViewController: UICollectionViewDataSource {
         switch sectionType {
         case .photo(let viewModel):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterPhotoCollectionViewCell.identifier, for: indexPath) as? RMCharacterPhotoCollectionViewCell else { fatalError() }
-            cell.backgroundColor = .systemBlue
             cell.configure(with: viewModel)
             return cell
         case .information(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterInfoCollectionViewCell.identifier, for: indexPath) as? RMCharacterInfoCollectionViewCell else { fatalError() }
-            cell.backgroundColor = .systemPink
             cell.configure(with: viewModels[indexPath.row])
             return cell
         case .episodes(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterEpisodesCollectionViewCell.identifier, for: indexPath) as? RMCharacterEpisodesCollectionViewCell else { fatalError() }
-            cell.backgroundColor = .systemGreen
             cell.configure(with: viewModels[indexPath.row])
             return cell
         }
@@ -96,5 +93,16 @@ extension RMCharacterDetailViewController: UICollectionViewDataSource {
 }
 
 extension RMCharacterDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
 
+        let sectionType = viewModel.sections[indexPath.section]
+        switch sectionType {
+        case .photo, .information:
+            break
+        case .episodes(let viewModels):
+            let viewModel = viewModels[indexPath.row]
+            
+        }
+    }
 }
