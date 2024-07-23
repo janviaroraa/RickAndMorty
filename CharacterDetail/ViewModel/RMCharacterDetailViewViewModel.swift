@@ -19,6 +19,10 @@ final class RMCharacterDetailViewViewModel {
     private let character: RMCharacter
     var sections: [RMCharacterDetailSectionType] = []
 
+    var episodes: [String] {
+        character.episode ?? []
+    }
+
     var characterName: String {
         character.name?.uppercased() ?? "Default Name"
     }
