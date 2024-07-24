@@ -13,9 +13,15 @@ final class RMCharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        configureNavBarItem()
         addViews()
         layoutConstraints()
         characterListView.delegate = self
+    }
+
+    private func configureNavBarItem() {
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .search, target: self, action: #selector(didTapSearch))
     }
 
     private func addViews() {
@@ -29,6 +35,13 @@ final class RMCharacterViewController: UIViewController {
             characterListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             characterListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+
+    @objc
+    private func didTapSearch() {
+        let vc = RMSearchViewController(config: .init(type: .character))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

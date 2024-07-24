@@ -12,6 +12,8 @@ final class RMEpisodeDetailViewController: UIViewController {
     private let url: URL?
     private var viewModel: RMEpisodeDetailViewViewModel?
 
+    private let detailView = RMEpisodeDetailView()
+
     init(url: URL?) {
         self.url = url
         super.init(nibName: nil, bundle: nil)
@@ -28,9 +30,43 @@ final class RMEpisodeDetailViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         registerViewModel()
+        configureNavBarItem()
+        addViews()
+        layoutConstraints()
+        viewModel?.delegate = self
+        viewModel?.fetchEpisodeData()
     }
 
     private func registerViewModel() {
         viewModel = RMEpisodeDetailViewViewModel(endpointURL: url)
+    }
+
+    private func configureNavBarItem() {
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+    }
+
+    private func addViews() {
+        view.addSubview(detailView)
+    }
+
+    private func layoutConstraints() {
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            detailView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+    }
+
+    @objc
+    private func didTapShare() {
+
+    }
+}
+
+extension RMEpisodeDetailViewController: RMEpisodeDetailViewViewModelDelegate {
+    func didFetchEpisodeDetails() {
+        guard let viewModel else { return }
+        detailView.configure(with: viewModel)
     }
 }

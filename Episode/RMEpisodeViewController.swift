@@ -13,9 +13,15 @@ final class RMEpisodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        configureNavBarItem()
         addViews()
         layoutConstraints()
         episodeListView.delegate = self
+    }
+
+    private func configureNavBarItem() {
+        navigationItem.rightBarButtonItem = .init(barButtonSystemItem: .search, target: self, action: #selector(didTapSearch))
     }
 
     private func addViews() {
@@ -29,6 +35,13 @@ final class RMEpisodeViewController: UIViewController {
             episodeListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             episodeListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+
+    @objc
+    private func didTapSearch() {
+        let vc = RMSearchViewController(config: .init(type: .episode))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
