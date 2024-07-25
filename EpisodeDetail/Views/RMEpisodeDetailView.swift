@@ -73,7 +73,8 @@ final class RMEpisodeDetailView: UIView {
         cv.alpha = 0 // to fade in and out
         cv.dataSource = self
         cv.delegate = self
-        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        cv.register(RMEpisodeInfoCollectionViewCell.self, forCellWithReuseIdentifier: RMEpisodeInfoCollectionViewCell.identifier)
+        cv.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.identifier)
         return cv
     }
 
@@ -84,6 +85,12 @@ final class RMEpisodeDetailView: UIView {
 
 extension RMEpisodeDetailView {
     private func layout(for section: Int) -> NSCollectionLayoutSection {
+//        guard let sections = viewModel?.cellViewModels else {
+//            return createInfoLayout()
+//        }
+    }
+
+    private func createInfoLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: .init(
                 widthDimension: .fractionalWidth(1.0),
@@ -125,9 +132,22 @@ extension RMEpisodeDetailView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = .systemPink
-        return cell
+        guard let sections = viewModel?.cellViewModels else { fatalError("No viewModel") }
+
+        let sectionType = sections[indexPath.section]
+
+        switch sectionType {
+        case .information(let viewModels):
+            let cellViewModel = viewModels[indexPath.row]
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMEpisodeInfoCollectionViewCell.identifier, for: indexPath) as? RMEpisodeInfoCollectionViewCell else { fatalError("Unsupported") }
+            cell.configure(with: cellViewModel)
+            return cell
+        case .characters(let viewModels):
+            let cellViewModel = viewModels[indexPath.row]
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterCollectionViewCell.identifier, for: indexPath) as? RMCharacterCollectionViewCell else { fatalError("Unsupported") }
+            cell.configure(with: cellViewModel)
+            return cell
+        }
     }
 }
 
