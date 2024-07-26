@@ -12,7 +12,7 @@ class RMEpisodeInfoCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
+        updateBorderColor()
     }
 
     required init?(coder: NSCoder) {
@@ -21,6 +21,17 @@ class RMEpisodeInfoCollectionViewCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateBorderColor()
+    }
+
+    private func updateBorderColor() {
+        contentView.layer.borderColor = UIColor.quaternaryLabel.cgColor
+        contentView.layer.borderWidth = 2
+        contentView.layer.cornerRadius = 8
+        contentView.backgroundColor = .secondarySystemBackground
     }
 
     func configure(with viewModel: RMEpisodeInfoCollectionViewCellViewModel) {

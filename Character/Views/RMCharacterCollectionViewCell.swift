@@ -80,6 +80,7 @@ class RMCharacterCollectionViewCell: UICollectionViewCell {
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.layer.shadowRadius = 4
         contentView.layer.masksToBounds = false
+        stackView.layer.borderColor = UIColor.systemGray4.cgColor
     }
 
     private func addViews() {

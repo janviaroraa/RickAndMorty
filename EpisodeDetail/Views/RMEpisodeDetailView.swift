@@ -85,9 +85,16 @@ final class RMEpisodeDetailView: UIView {
 
 extension RMEpisodeDetailView {
     private func layout(for section: Int) -> NSCollectionLayoutSection {
-//        guard let sections = viewModel?.cellViewModels else {
-//            return createInfoLayout()
-//        }
+        guard let sections = viewModel?.cellViewModels else {
+            return createInfoLayout()
+        }
+
+        switch sections[section] {
+        case .information:
+            return createInfoLayout()
+        case .characters:
+            return createCharactersLayout()
+        }
     }
 
     private func createInfoLayout() -> NSCollectionLayoutSection {
@@ -108,6 +115,30 @@ extension RMEpisodeDetailView {
             subitems: [item]
         )
 
+        let section = NSCollectionLayoutSection(group: group)
+        return section
+    }
+
+    private func createCharactersLayout() -> NSCollectionLayoutSection {
+        let layoutSizeForItem = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.5),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: layoutSizeForItem)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+        let bounds = UIScreen.main.bounds
+        let width = (bounds.width - 30) / 2
+        let height = width * 1.5
+
+        let layoutSizeForGroup = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(height)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: layoutSizeForGroup,
+            subitems: [item, item]
+        )
         let section = NSCollectionLayoutSection(group: group)
         return section
     }
