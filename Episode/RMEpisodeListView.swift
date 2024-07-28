@@ -49,7 +49,7 @@ final class RMEpisodeListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        addSubviews(collectionView, spinner)
+        addViews()
         addConstraints()
         spinner.startAnimating()
         viewModel.delegate = self
@@ -59,6 +59,10 @@ final class RMEpisodeListView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
+    }
+
+    private func addViews() {
+        addSubviews(collectionView, spinner)
     }
 
     private func addConstraints() {

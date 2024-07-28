@@ -49,7 +49,6 @@ final class RMLocationViewViewModal {
                 self?.apiInfo = modal.info
                 self?.locations = modal.results
                 self?.delegate?.didFetchInitialLocations()
-                print(modal)
             case .failure(let error):
                 print(error.localizedDescription)
             }
