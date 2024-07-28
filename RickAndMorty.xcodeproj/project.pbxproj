@@ -68,6 +68,14 @@
 		12A09E652C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E642C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift */; };
 		12A09E672C551A4F002E3BCF /* RMSettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E662C551A4F002E3BCF /* RMSettingsOptions.swift */; };
 		12A09E6D2C551E52002E3BCF /* RMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E6C2C551E52002E3BCF /* RMSettingsView.swift */; };
+		12A09E732C560E73002E3BCF /* RMLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E722C560E73002E3BCF /* RMLocationView.swift */; };
+		12A09E752C561022002E3BCF /* RMLocationViewViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E742C561022002E3BCF /* RMLocationViewViewModal.swift */; };
+		12A09E772C561139002E3BCF /* RMLocationTableViewCellViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E762C561139002E3BCF /* RMLocationTableViewCellViewModal.swift */; };
+		12A09E792C561159002E3BCF /* RMLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E782C561159002E3BCF /* RMLocationTableViewCell.swift */; };
+		12A09E7B2C561431002E3BCF /* RMGetAllLocationsResponseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E7A2C561431002E3BCF /* RMGetAllLocationsResponseModal.swift */; };
+		12A09E7E2C562C1A002E3BCF /* RMLocationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E7D2C562C19002E3BCF /* RMLocationDetailViewController.swift */; };
+		12A09E842C562E19002E3BCF /* RMLocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E832C562E19002E3BCF /* RMLocationDetailView.swift */; };
+		12A09E862C562EED002E3BCF /* RMLocationDetailViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E852C562EED002E3BCF /* RMLocationDetailViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +161,14 @@
 		12A09E642C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsCellViewViewModal.swift; sourceTree = "<group>"; };
 		12A09E662C551A4F002E3BCF /* RMSettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsOptions.swift; sourceTree = "<group>"; };
 		12A09E6C2C551E52002E3BCF /* RMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsView.swift; sourceTree = "<group>"; };
+		12A09E722C560E73002E3BCF /* RMLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationView.swift; sourceTree = "<group>"; };
+		12A09E742C561022002E3BCF /* RMLocationViewViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationViewViewModal.swift; sourceTree = "<group>"; };
+		12A09E762C561139002E3BCF /* RMLocationTableViewCellViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationTableViewCellViewModal.swift; sourceTree = "<group>"; };
+		12A09E782C561159002E3BCF /* RMLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationTableViewCell.swift; sourceTree = "<group>"; };
+		12A09E7A2C561431002E3BCF /* RMGetAllLocationsResponseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetAllLocationsResponseModal.swift; sourceTree = "<group>"; };
+		12A09E7D2C562C19002E3BCF /* RMLocationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationDetailViewController.swift; sourceTree = "<group>"; };
+		12A09E832C562E19002E3BCF /* RMLocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationDetailView.swift; sourceTree = "<group>"; };
+		12A09E852C562EED002E3BCF /* RMLocationDetailViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocationDetailViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +210,7 @@
 				126064D72C425BBE004E2B26 /* Character */,
 				1260650C2C4518B5004E2B26 /* CharacterDetail */,
 				126064D62C425BB6004E2B26 /* Location */,
+				12A09E7C2C562C04002E3BCF /* LocationDetail */,
 				126064D82C425BC4004E2B26 /* Episode */,
 				12A09DCF2C4E258A002E3BCF /* EpisodeDetail */,
 				126064E02C425CA6004E2B26 /* Settings */,
@@ -283,8 +300,10 @@
 		126064D62C425BB6004E2B26 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				126064DD2C425BDE004E2B26 /* RMLocation.swift */,
-				126064E52C425CDD004E2B26 /* RMLocationViewController.swift */,
+				12A09E712C560E67002E3BCF /* Views */,
+				12A09E702C560DFE002E3BCF /* ViewModal */,
+				12A09E6F2C560DF6002E3BCF /* Modals */,
+				12A09E6E2C560DED002E3BCF /* Controllers */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -355,6 +374,7 @@
 			children = (
 				126064FC2C43E9C8004E2B26 /* RMGetAllCharactersResponseModal.swift */,
 				12A09DE52C4E60AF002E3BCF /* RMGetAllEpisodesResponseModal.swift */,
+				12A09E7A2C561431002E3BCF /* RMGetAllLocationsResponseModal.swift */,
 			);
 			path = APIResponseTypes;
 			sourceTree = "<group>";
@@ -563,6 +583,82 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		12A09E6E2C560DED002E3BCF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				126064E52C425CDD004E2B26 /* RMLocationViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		12A09E6F2C560DF6002E3BCF /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				126064DD2C425BDE004E2B26 /* RMLocation.swift */,
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
+		12A09E702C560DFE002E3BCF /* ViewModal */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E742C561022002E3BCF /* RMLocationViewViewModal.swift */,
+				12A09E762C561139002E3BCF /* RMLocationTableViewCellViewModal.swift */,
+			);
+			path = ViewModal;
+			sourceTree = "<group>";
+		};
+		12A09E712C560E67002E3BCF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E722C560E73002E3BCF /* RMLocationView.swift */,
+				12A09E782C561159002E3BCF /* RMLocationTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		12A09E7C2C562C04002E3BCF /* LocationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E822C562E0A002E3BCF /* ViewModals */,
+				12A09E812C562E06002E3BCF /* Modals */,
+				12A09E802C562E00002E3BCF /* Controllers */,
+				12A09E7F2C562DFB002E3BCF /* Views */,
+			);
+			path = LocationDetail;
+			sourceTree = "<group>";
+		};
+		12A09E7F2C562DFB002E3BCF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E832C562E19002E3BCF /* RMLocationDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		12A09E802C562E00002E3BCF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E7D2C562C19002E3BCF /* RMLocationDetailViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		12A09E812C562E06002E3BCF /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
+		12A09E822C562E0A002E3BCF /* ViewModals */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E852C562EED002E3BCF /* RMLocationDetailViewViewModel.swift */,
+			);
+			path = ViewModals;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -698,6 +794,7 @@
 				126065002C44195F004E2B26 /* RMCharacterListViewViewModal.swift in Sources */,
 				12A09DC02C4BF863002E3BCF /* RMCharacterInfoCollectionViewCell.swift in Sources */,
 				12A09DB32C4A938C002E3BCF /* RMErrorToast.swift in Sources */,
+				12A09E772C561139002E3BCF /* RMLocationTableViewCellViewModal.swift in Sources */,
 				12A09DFA2C4F954F002E3BCF /* RMSearchViewController.swift in Sources */,
 				12A09E632C551970002E3BCF /* RMSettingsViewViewModal.swift in Sources */,
 				126064F02C42B718004E2B26 /* RMOrigin.swift in Sources */,
@@ -708,20 +805,25 @@
 				126064FD2C43E9C8004E2B26 /* RMGetAllCharactersResponseModal.swift in Sources */,
 				126064F42C42B7BC004E2B26 /* RMCharacterStatus.swift in Sources */,
 				12A09DDD2C4E5382002E3BCF /* RMEpisodeListViewViewModel.swift in Sources */,
+				12A09E862C562EED002E3BCF /* RMLocationDetailViewViewModel.swift in Sources */,
 				12A09DF62C4F91B9002E3BCF /* RMEpisodeDetailView.swift in Sources */,
 				126064F62C42B868004E2B26 /* RMCharacterGender.swift in Sources */,
 				126064E62C425CDD004E2B26 /* RMLocationViewController.swift in Sources */,
 				12A09DAC2C4A8C5C002E3BCF /* RMImageManager.swift in Sources */,
 				126064A62C42585A004E2B26 /* RMTabViewController.swift in Sources */,
+				12A09E842C562E19002E3BCF /* RMLocationDetailView.swift in Sources */,
 				126064DE2C425BDE004E2B26 /* RMLocation.swift in Sources */,
 				12A09DC82C4BF8FD002E3BCF /* RMCharacterEpisodesCollectionViewCellViewModel.swift in Sources */,
 				126064A22C42585A004E2B26 /* AppDelegate.swift in Sources */,
 				12A09DBE2C4BF85A002E3BCF /* RMCharacterPhotoCollectionViewCell.swift in Sources */,
 				126064DA2C425BCE004E2B26 /* RMEpisode.swift in Sources */,
+				12A09E752C561022002E3BCF /* RMLocationViewViewModal.swift in Sources */,
 				12A09DD72C4E47B5002E3BCF /* RMAPICacheManager.swift in Sources */,
 				1260650E2C4518D7004E2B26 /* RMCharacterDetailViewController.swift in Sources */,
 				126064A42C42585A004E2B26 /* SceneDelegate.swift in Sources */,
 				12A09DC22C4BF86C002E3BCF /* RMCharacterEpisodesCollectionViewCell.swift in Sources */,
+				12A09E792C561159002E3BCF /* RMLocationTableViewCell.swift in Sources */,
+				12A09E732C560E73002E3BCF /* RMLocationView.swift in Sources */,
 				12A09DB52C4A93D3002E3BCF /* UIColor+Ext.swift in Sources */,
 				12A09DFE2C4FCAC0002E3BCF /* RMEpisodeInfoCollectionViewCellViewModel.swift in Sources */,
 				12A09DB12C4A9376002E3BCF /* RMSuccessToast.swift in Sources */,
@@ -730,6 +832,7 @@
 				12A09E6D2C551E52002E3BCF /* RMSettingsView.swift in Sources */,
 				12A09DAF2C4A8D83002E3BCF /* RMToastAdaptable.swift in Sources */,
 				126065032C4419CA004E2B26 /* RMCharacterListView.swift in Sources */,
+				12A09E7E2C562C1A002E3BCF /* RMLocationDetailViewController.swift in Sources */,
 				12A09DDB2C4E4E4E002E3BCF /* RMEpisodeListView.swift in Sources */,
 				12A09DE62C4E60AF002E3BCF /* RMGetAllEpisodesResponseModal.swift in Sources */,
 				126064E82C425CE8004E2B26 /* RMSettingsViewController.swift in Sources */,
@@ -741,6 +844,7 @@
 				12A09DC42C4BF8E9002E3BCF /* RMCharacterPhotoCollectionViewCellViewModel.swift in Sources */,
 				12A09DD12C4E25A7002E3BCF /* RMEpisodeDetailViewController.swift in Sources */,
 				126064DC2C425BD7004E2B26 /* RMCharacter.swift in Sources */,
+				12A09E7B2C561431002E3BCF /* RMGetAllLocationsResponseModal.swift in Sources */,
 				126065072C443C0F004E2B26 /* RMCharacterCollectionViewCell.swift in Sources */,
 				12A09DEA2C4E9A3B002E3BCF /* RMCharacterEpisodeCollectionViewCell.swift in Sources */,
 				126064E22C425CC7004E2B26 /* RMCharacterViewController.swift in Sources */,
@@ -925,6 +1029,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickAndMorty/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Rick & Morty";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -952,6 +1057,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickAndMorty/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Rick & Morty";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
