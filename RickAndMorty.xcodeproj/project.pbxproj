@@ -64,6 +64,10 @@
 		12A09DFC2C4F95A0002E3BCF /* RMSearchConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DFB2C4F95A0002E3BCF /* RMSearchConfig.swift */; };
 		12A09DFE2C4FCAC0002E3BCF /* RMEpisodeInfoCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DFD2C4FCAC0002E3BCF /* RMEpisodeInfoCollectionViewCellViewModel.swift */; };
 		12A09E002C4FCB08002E3BCF /* RMEpisodeInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09DFF2C4FCB08002E3BCF /* RMEpisodeInfoCollectionViewCell.swift */; };
+		12A09E632C551970002E3BCF /* RMSettingsViewViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E622C551970002E3BCF /* RMSettingsViewViewModal.swift */; };
+		12A09E652C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E642C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift */; };
+		12A09E672C551A4F002E3BCF /* RMSettingsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E662C551A4F002E3BCF /* RMSettingsOptions.swift */; };
+		12A09E6D2C551E52002E3BCF /* RMSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A09E6C2C551E52002E3BCF /* RMSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +149,10 @@
 		12A09DFB2C4F95A0002E3BCF /* RMSearchConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchConfig.swift; sourceTree = "<group>"; };
 		12A09DFD2C4FCAC0002E3BCF /* RMEpisodeInfoCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeInfoCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		12A09DFF2C4FCB08002E3BCF /* RMEpisodeInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisodeInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		12A09E622C551970002E3BCF /* RMSettingsViewViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsViewViewModal.swift; sourceTree = "<group>"; };
+		12A09E642C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsCellViewViewModal.swift; sourceTree = "<group>"; };
+		12A09E662C551A4F002E3BCF /* RMSettingsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsOptions.swift; sourceTree = "<group>"; };
+		12A09E6C2C551E52002E3BCF /* RMSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,7 +322,10 @@
 		126064E02C425CA6004E2B26 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				126064E72C425CE8004E2B26 /* RMSettingsViewController.swift */,
+				12A09E6B2C551E28002E3BCF /* Views */,
+				12A09E6A2C551C61002E3BCF /* Others */,
+				12A09E692C551C5B002E3BCF /* Controllers */,
+				12A09E682C551C56002E3BCF /* ViewModal */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -519,6 +530,39 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		12A09E682C551C56002E3BCF /* ViewModal */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E642C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift */,
+				12A09E622C551970002E3BCF /* RMSettingsViewViewModal.swift */,
+			);
+			path = ViewModal;
+			sourceTree = "<group>";
+		};
+		12A09E692C551C5B002E3BCF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				126064E72C425CE8004E2B26 /* RMSettingsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		12A09E6A2C551C61002E3BCF /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E662C551A4F002E3BCF /* RMSettingsOptions.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		12A09E6B2C551E28002E3BCF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				12A09E6C2C551E52002E3BCF /* RMSettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -650,10 +694,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				12A09DFC2C4F95A0002E3BCF /* RMSearchConfig.swift in Sources */,
+				12A09E652C5519B9002E3BCF /* RMSettingsCellViewViewModal.swift in Sources */,
 				126065002C44195F004E2B26 /* RMCharacterListViewViewModal.swift in Sources */,
 				12A09DC02C4BF863002E3BCF /* RMCharacterInfoCollectionViewCell.swift in Sources */,
 				12A09DB32C4A938C002E3BCF /* RMErrorToast.swift in Sources */,
 				12A09DFA2C4F954F002E3BCF /* RMSearchViewController.swift in Sources */,
+				12A09E632C551970002E3BCF /* RMSettingsViewViewModal.swift in Sources */,
 				126064F02C42B718004E2B26 /* RMOrigin.swift in Sources */,
 				12A09DE82C4E6102002E3BCF /* RMCharacterEpisodeCollectionViewCellViewModel.swift in Sources */,
 				12A09E002C4FCB08002E3BCF /* RMEpisodeInfoCollectionViewCell.swift in Sources */,
@@ -681,6 +727,7 @@
 				12A09DB12C4A9376002E3BCF /* RMSuccessToast.swift in Sources */,
 				12A09DC62C4BF8F4002E3BCF /* RMCharacterInfoCollectionViewCellViewModel.swift in Sources */,
 				126065052C4421EE004E2B26 /* UIView+Ext.swift in Sources */,
+				12A09E6D2C551E52002E3BCF /* RMSettingsView.swift in Sources */,
 				12A09DAF2C4A8D83002E3BCF /* RMToastAdaptable.swift in Sources */,
 				126065032C4419CA004E2B26 /* RMCharacterListView.swift in Sources */,
 				12A09DDB2C4E4E4E002E3BCF /* RMEpisodeListView.swift in Sources */,
@@ -699,6 +746,7 @@
 				126064E22C425CC7004E2B26 /* RMCharacterViewController.swift in Sources */,
 				12A09DAA2C48DFA7002E3BCF /* RMFooterLoadingCollectionReusableView.swift in Sources */,
 				126064EC2C42A801004E2B26 /* RMRequest.swift in Sources */,
+				12A09E672C551A4F002E3BCF /* RMSettingsOptions.swift in Sources */,
 				126065092C443EF9004E2B26 /* RMCharacterCollectionViewCellViewModel.swift in Sources */,
 				126064E42C425CD2004E2B26 /* RMEpisodeViewController.swift in Sources */,
 			);
