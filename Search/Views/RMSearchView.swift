@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol RMSearchViewDelegate: AnyObject {
+    func rmSearchView(_ inputView: RMSearchView, didSelect option: RMSearchDynamicOption)
+}
+
 final class RMSearchView: UIView {
 
     private let viewModal: RMSearchViewViewModal
+    weak var delegate: RMSearchViewDelegate?
 
     private let emptyStateView = RMNoSearchStateView()
     private let searchInputView = RMSearchInputView()
@@ -21,8 +26,13 @@ final class RMSearchView: UIView {
         addViews()
         layoutConstraints()
         searchInputView.configure(with: .init(type: viewModal.config.type))
+        searchInputView.delegate = self
+
+        viewModal.registerOptionChangeblock { tuple in
+            self.searchInputView.update(option: tuple.0, value: tuple.1)
+        }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,11 +70,17 @@ final class RMSearchView: UIView {
     }
 }
 
+extension RMSearchView: RMSearchInputViewDelegate {
+    func rmSearchInputView(_ inputView: RMSearchInputView, didSelect option: RMSearchDynamicOption) {
+        delegate?.rmSearchView(self, didSelect: option)
+    }
+}
+
 extension RMSearchView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         10
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         cell.backgroundColor = .systemIndigo
@@ -73,7 +89,7 @@ extension RMSearchView: UICollectionViewDataSource {
 }
 
 extension RMSearchView: UICollectionViewDelegateFlowLayout {
-
+    
 }
 
 extension RMSearchView: UICollectionViewDelegate {

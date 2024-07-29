@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol RMSearchInputViewDelegate: AnyObject {
+    func rmSearchInputView(_ inputView: RMSearchInputView, didSelect option: RMSearchDynamicOption)
+}
+
 final class RMSearchInputView: UIView {
+
+    weak var delegate: RMSearchInputViewDelegate?
 
     private var viewModal: RMSearchInputViewViewModal? {
         didSet {
@@ -16,6 +22,8 @@ final class RMSearchInputView: UIView {
             createOptionsSelectionview(options: options)
         }
     }
+
+    private var stackView: UIStackView?
 
     private lazy var searchBar: UISearchBar = {
         let searchB = UISearchBar()
@@ -47,13 +55,13 @@ final class RMSearchInputView: UIView {
         ])
     }
 
-    private func createOptionsSelectionview(options: [RMSearchDynamicOptions]) {
-        let stackView = createDynamicStack()
+    private func createOptionsSelectionview(options: [RMSearchDynamicOption]) {
+        stackView = createDynamicStack()
 
         for item in 0..<options.count {
             let option = options[item]
             let button = createDynamicButton(with: option, tag: item)
-            stackView.addArrangedSubview(button)
+            stackView?.addArrangedSubview(button)
         }
     }
 
@@ -79,7 +87,7 @@ final class RMSearchInputView: UIView {
         return stackView
     }
 
-    private func createDynamicButton(with option: RMSearchDynamicOptions, tag: Int) -> UIButton {
+    private func createDynamicButton(with option: RMSearchDynamicOption, tag: Int) -> UIButton {
         let button = UIButton()
         button.setTitle(option.rawValue, for: .normal)
         button.backgroundColor = .systemGray5
@@ -95,12 +103,22 @@ final class RMSearchInputView: UIView {
     private func didTapOption(_ sender: UIButton) {
         guard let viewModal, viewModal.hasDynamicOptions else { return }
         let tag = sender.tag
-        let selected = viewModal.options[tag]
-        print(selected.rawValue)
+        let selectedOption = viewModal.options[tag]
+        delegate?.rmSearchInputView(self, didSelect: selectedOption)
     }
 
     func presentKeyboard() {
         searchBar.becomeFirstResponder()
+    }
+
+    func update(option: RMSearchDynamicOption, value: String) {
+        guard let buttons = stackView?.arrangedSubviews as? [UIButton],
+              let allOptions = viewModal?.options,
+              let index = allOptions.firstIndex(of: option) else { return }
+
+        let button = buttons[index]
+        button.setTitle(value.uppercased(), for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
     }
 
     func configure(with viewModal: RMSearchInputViewViewModal) {

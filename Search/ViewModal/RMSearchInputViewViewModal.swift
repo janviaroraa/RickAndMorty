@@ -20,7 +20,7 @@ struct RMSearchInputViewViewModal {
         }
     }
 
-    var options: [RMSearchDynamicOptions] {
+    var options: [RMSearchDynamicOption] {
         switch self.type {
         case .character:
             return [.characterGender, .characterStatus]
