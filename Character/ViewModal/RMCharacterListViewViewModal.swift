@@ -44,9 +44,8 @@ final class RMCharacterListViewViewModal: NSObject {
         RMService.shared.execute(.listCharactersRequest, expecting: RMGetAllCharactersResponseModal.self) { [weak self] result in
             switch result {
             case .success(let model):
-                guard let results = model.results,
-                      let info = model.info else { return }
-                self?.characters = results
+                guard let info = model.info else { return }
+                self?.characters = model.results
                 self?.apiInfo = info
                 DispatchQueue.main.async {
                     self?.delegate?.didLoadInitialCharacters()
@@ -74,10 +73,9 @@ final class RMCharacterListViewViewModal: NSObject {
             guard let self else { return }
             switch result {
             case .success(let model):
-                guard let moreResults = model.results,
-                      let info = model.info else { return }
+                guard let info = model.info else { return }
                 self.apiInfo = info
-                self.delegate?.didLoadMoreCharacters(newResults: moreResults)
+                self.delegate?.didLoadMoreCharacters(newResults: model.results)
                 self.shouldLoadMoreCharacters = false
             case .failure(let error):
                 self.shouldLoadMoreCharacters = false

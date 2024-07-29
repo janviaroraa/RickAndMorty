@@ -9,6 +9,7 @@ import UIKit
 
 protocol RMSearchViewDelegate: AnyObject {
     func rmSearchView(_ inputView: RMSearchView, didSelect option: RMSearchDynamicOption)
+    func rmSearchView(_ inputView: RMSearchView, didSelect location: RMLocation)
 }
 
 final class RMSearchView: UIView {
@@ -16,8 +17,9 @@ final class RMSearchView: UIView {
     private let viewModal: RMSearchViewViewModal
     weak var delegate: RMSearchViewDelegate?
 
-    private let emptyStateView = RMNoSearchStateView()
+    private let noResultsStateView = RMNoSearchStateView()
     private let searchInputView = RMSearchInputView()
+    private let searchResultsView = RMSearchResultsView()
 
     init(frame: CGRect, viewModal: RMSearchViewViewModal) {
         self.viewModal = viewModal
@@ -27,10 +29,8 @@ final class RMSearchView: UIView {
         layoutConstraints()
         searchInputView.configure(with: .init(type: viewModal.config.type))
         searchInputView.delegate = self
-
-        viewModal.registerOptionChangeblock { tuple in
-            self.searchInputView.update(option: tuple.0, value: tuple.1)
-        }
+        setupHandlers(viewModal: viewModal)
+        searchResultsView.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -38,7 +38,7 @@ final class RMSearchView: UIView {
     }
 
     private func addViews() {
-        addSubviews(searchInputView, emptyStateView)
+        addSubviews(searchInputView, noResultsStateView, searchResultsView)
     }
 
     private func layoutConstraints() {
@@ -52,27 +52,62 @@ final class RMSearchView: UIView {
 
         NSLayoutConstraint.activate([
             // No results View
-            emptyStateView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            emptyStateView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            emptyStateView.heightAnchor.constraint(equalToConstant: 100),
-            emptyStateView.widthAnchor.constraint(equalToConstant: 100),
+            noResultsStateView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            noResultsStateView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            noResultsStateView.heightAnchor.constraint(equalToConstant: 100),
+            noResultsStateView.widthAnchor.constraint(equalToConstant: 100),
 
             // Input Search View
             searchInputView.topAnchor.constraint(equalTo: topAnchor),
             searchInputView.leadingAnchor.constraint(equalTo: leadingAnchor),
             searchInputView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            searchInputView.heightAnchor.constraint(equalToConstant: 60 + optionsHeight)
+            searchInputView.heightAnchor.constraint(equalToConstant: 60 + optionsHeight),
+
+            // Results View
+            searchResultsView.topAnchor.constraint(equalTo: searchInputView.bottomAnchor, constant: 10),
+            searchResultsView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            searchResultsView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            searchResultsView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
     func presentKeyboard() {
         searchInputView.presentKeyboard()
     }
+
+    private func setupHandlers(viewModal: RMSearchViewViewModal) {
+        viewModal.registerOptionChangeblock { tuple in
+            self.searchInputView.update(option: tuple.0, value: tuple.1)
+        }
+
+        viewModal.registerSearchResultHandler { [weak self] results in
+            DispatchQueue.main.async {
+                self?.searchResultsView.configure(with: results)
+                self?.noResultsStateView.isHidden = true
+                self?.searchResultsView.isHidden = false
+            }
+        }
+
+        viewModal.noSearchResultsHandler { [weak self] in
+            DispatchQueue.main.async {
+                self?.noResultsStateView.isHidden = false
+                self?.searchResultsView.isHidden = true
+            }
+        }
+    }
 }
 
 extension RMSearchView: RMSearchInputViewDelegate {
     func rmSearchInputView(_ inputView: RMSearchInputView, didSelect option: RMSearchDynamicOption) {
         delegate?.rmSearchView(self, didSelect: option)
+    }
+
+    func rmSearchInputView(_ inputView: RMSearchInputView, didChangeSearchText text: String) {
+        viewModal.set(query: text)
+    }
+
+    func rmSearchInputViewDidTapSearchKeyboardButton(_ inputView: RMSearchInputView) {
+        viewModal.executeSearch()
     }
 }
 
@@ -97,3 +132,11 @@ extension RMSearchView: UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
+
+extension RMSearchView: RMSearchResultsViewDelegate {
+    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapLocationAt index: Int) {
+        guard let selectedLocation = viewModal.locationsSearchResult(at: index) else { return }
+        delegate?.rmSearchView(self, didSelect: selectedLocation)
+    }
+}
+

@@ -56,7 +56,7 @@ class PPToastAdaptable: NSObject {
     }
 
     private func layoutConstraints() {
-        guard let window = window else { return }
+        guard window != nil else { return }
 
         NSLayoutConstraint.activate([
             headerLbl.leadingAnchor.constraint(equalTo: toastContainer.leadingAnchor, constant: 12),

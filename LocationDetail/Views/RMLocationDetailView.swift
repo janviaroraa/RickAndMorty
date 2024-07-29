@@ -200,7 +200,7 @@ extension RMLocationDetailView: UICollectionViewDelegate {
         switch sectionType {
         case .information:
             break
-        case .characters(let viewModels):
+        case .characters:
             guard let character = viewModel.character(at: indexPath.row) else { return }
             delegate?.rmLocationDetailView(self, didSelect: character)
         }

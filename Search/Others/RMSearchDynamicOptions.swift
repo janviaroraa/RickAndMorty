@@ -16,14 +16,19 @@ enum RMSearchDynamicOption: String {
     case characterStatus = "Status"
     case locationType = "Location Type"
 
+    var queryArguments: String {
+        switch self {
+        case .characterGender: return "gender"
+        case .characterStatus: return "status"
+        case .locationType: return "type"
+        }
+    }
+
     var choices: [String] {
         switch self {
-        case .characterGender:
-            return RMCharacterGender.allValues
-        case .characterStatus:
-            return RMCharacterStatus.allValues
-        case .locationType:
-            return RMLocationType.allValues
+        case .characterGender: return RMCharacterGender.allValues
+        case .characterStatus: return RMCharacterStatus.allValues
+        case .locationType: return RMLocationType.allValues
         }
     }
 }

@@ -16,12 +16,17 @@ struct RMSearchConfig {
 
         var title: String {
             switch self {
-            case .character:
-                return "Search Characters"
-            case .location:
-                return "Search Locations"
-            case .episode:
-                return "Search Episodes"
+            case .character: return "Search Characters"
+            case .location: return "Search Locations"
+            case .episode: return "Search Episodes"
+            }
+        }
+
+        var endpoint: RMEndPoint {
+            switch self {
+            case .character: return .character
+            case .location: return .location
+            case .episode: return .episode
             }
         }
     }
