@@ -132,8 +132,18 @@ extension RMCharacterListViewViewModal: UICollectionViewDelegate {
 
 extension RMCharacterListViewViewModal: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let bounds = UIScreen.main.bounds
-        let width = (bounds.width - 30) / 2
+        let iPhone = UIDevice.current.userInterfaceIdiom == .phone
+
+        let bounds = collectionView.bounds
+        var width: CGFloat
+
+        if iPhone {
+            width = (bounds.width - 30) / 2
+        } else {
+            // ipad or mac
+            width = (bounds.width - 50) / 4
+        }
+
         return CGSize(
             width: width,
             height: width * 1.5

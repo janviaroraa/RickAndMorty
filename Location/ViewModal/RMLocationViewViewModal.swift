@@ -9,6 +9,7 @@ import Foundation
 
 protocol RMLocationViewViewModalDelegate: AnyObject {
     func didFetchInitialLocations()
+    func didLoadMoreLocations(with newIndexPaths: [IndexPath])
 }
 
 final class RMLocationViewViewModal {
@@ -27,7 +28,8 @@ final class RMLocationViewViewModal {
     var cellViewModals = [RMLocationTableViewCellViewModal]()
 
     weak var delegate: RMLocationViewViewModalDelegate?
-    private var apiInfo: RMGetAllLocationsResponseModal.Info?
+    var apiInfo: RMGetAllLocationsResponseModal.Info?
+    var isLoadingMoreLocations = false
 
     private var hasMoreResults: Bool {
         return false
@@ -35,6 +37,10 @@ final class RMLocationViewViewModal {
 
     init() {
 
+    }
+
+    var shouldShowLoadMoreIndicator: Bool {
+        return apiInfo?.next != nil
     }
 
     func location(at index: Int) -> RMLocation? {
@@ -51,6 +57,47 @@ final class RMLocationViewViewModal {
                 self?.delegate?.didFetchInitialLocations()
             case .failure(let error):
                 print(error.localizedDescription)
+            }
+        }
+    }
+
+    func fetchAdditionalLocations(url: URL) {
+        guard !isLoadingMoreLocations else {
+            return
+        }
+        isLoadingMoreLocations = true
+        guard let request = RMRequest(url: url) else {
+            isLoadingMoreLocations = false
+            return
+        }
+
+        RMService.shared.execute(request, expecting: RMGetAllLocationsResponseModal.self) { [weak self] result in
+            guard let strongSelf = self else {
+                return
+            }
+            switch result {
+            case .success(let responseModel):
+                let moreResults = responseModel.results
+                let info = responseModel.info
+                strongSelf.apiInfo = info
+
+                let originalCount = strongSelf.locations.count
+                let newCount = moreResults.count
+                let total = originalCount+newCount
+                let startingIndex = total - newCount
+                let indexPathsToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
+                    return IndexPath(row: $0, section: 0)
+                })
+                strongSelf.locations.append(contentsOf: moreResults)
+
+                DispatchQueue.main.async {
+                    strongSelf.delegate?.didLoadMoreLocations(with: indexPathsToAdd)
+
+                    strongSelf.isLoadingMoreLocations = false
+                }
+            case .failure(let failure):
+                print(String(describing: failure))
+                self?.isLoadingMoreLocations = false
             }
         }
     }

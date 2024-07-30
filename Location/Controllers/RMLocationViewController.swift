@@ -61,6 +61,12 @@ extension RMLocationViewController: RMLocationViewViewModalDelegate {
             self.locationView.configure(with: viewModal)
         }
     }
+
+    func didLoadMoreLocations(with newIndexPaths: [IndexPath]) {
+        DispatchQueue.main.async {
+            
+        }
+    }
 }
 
 extension RMLocationViewController: RMLocationViewDelegate {
