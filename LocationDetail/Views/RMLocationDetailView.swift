@@ -127,14 +127,21 @@ extension RMLocationDetailView {
 
     private func createCharactersLayout() -> NSCollectionLayoutSection {
         let layoutSizeForItem = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.5),
+            widthDimension: .fractionalWidth(UIDevice.current.userInterfaceIdiom == .phone ? 0.5 : 0.25),
             heightDimension: .fractionalHeight(1.0)
         )
         let item = NSCollectionLayoutItem(layoutSize: layoutSizeForItem)
         item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 
-        let bounds = UIScreen.main.bounds
-        let width = (bounds.width - 30) / 2
+        let bounds = collectionView?.bounds
+        var width: CGFloat
+
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            width = ((bounds?.width ?? 30) - 30) / 2
+        } else {
+            // ipad or mac
+            width = ((bounds?.width ?? 50) - 50) / 4
+        }
         let height = width * 1.5
 
         let layoutSizeForGroup = NSCollectionLayoutSize(
@@ -143,7 +150,7 @@ extension RMLocationDetailView {
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: layoutSizeForGroup,
-            subitems: [item, item]
+            subitems: UIDevice.current.userInterfaceIdiom == .phone ? [item, item] : [item, item, item , item]
         )
         let section = NSCollectionLayoutSection(group: group)
         return section

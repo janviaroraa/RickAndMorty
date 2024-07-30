@@ -33,7 +33,7 @@ final class RMSearchViewViewModal {
         var queryParams = [URLQueryItem]()
 
         if !searchText.isEmpty {
-            let escapedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            let escapedSearchText = searchText.trimmingCharacters(in: .whitespaces)
             queryParams.append(URLQueryItem(name: "name", value: escapedSearchText))
         }
 
